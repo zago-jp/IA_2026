@@ -1,9 +1,10 @@
 from search_base import SearchProblem, SearchAlgorithm, State
-from map_util import CityMap, GeoLocation, create_bg_map, location_from_tag, read_map, print_path
+from map_util import CityMap, GeoLocation, create_bg_map, location_from_tag, read_map, print_path, compute_distance
 from visualization import plot_map
 import plotly.graph_objects as go
 from typing import Iterator
 from ucs import UniformCostSearch
+from a_start import AStar
 
 # Modela o problema de encontrar o caminho mais curto entre duas localizações em um mapa da cidade
 class ShortestPathProblem(SearchProblem):
@@ -11,9 +12,19 @@ class ShortestPathProblem(SearchProblem):
         super().__init__(initial_state=State(start_location), goal_state=State(end_location))
         self.city_map = city_map
 
-    # IMPLEMENTE AQUI A FUNÇÃO SUCESSORA COM HEURISTICA
-
-
+    # IMPLEMENTAÇÃO DA FUNÇÃO SUCESSORA COM HEURISTICA
+    
+    # TO tomando gap aq, att: 22:41 usei o robozao!
+    def successors(self, state: State) -> Iterator[tuple[State, str, float]]:
+        for neighbor, distance in self.city_map.distances[state.location].items():
+            yield State(location=neighbor), neighbor, distance
+        
+    def h(self, state: State) -> float:
+        geo_actual = self.city_map.geo_locations[state.location]
+        geo_goal  = self.city_map.geo_locations[self.goal_state.location]
+        return compute_distance(geo_actual, geo_goal)    
+        
+        
 # Realiza testes e visualiza os resultados
 if __name__ == "__main__":
     # Exemplo de uso
