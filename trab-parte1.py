@@ -33,12 +33,18 @@ if __name__ == "__main__":
     end = location_from_tag("landmark=madre-marta", city_map)
     
     problem = ShortestPathProblem(start_location=start, end_location=end, city_map=city_map)
-    ucs = UniformCostSearch()
-    ucs.solve(problem)
+    # ucs = UniformCostSearch()
+    # ucs.solve(problem)
 
-    # Função para gerar um arquivo json com o caminho encontrado, caso queira salva-lo
-    # para visualização posterior: python visualization.py --path-file path.json
-    print_path([start] + ucs.actions, [], city_map) 
+    # # Função para gerar um arquivo json com o caminho encontrado, caso queira salva-lo
+    # # para visualização posterior: python visualization.py --path-file path.json
+    # print_path([start] + ucs.actions, [], city_map) 
     
-    # Visualiza o mapa e o caminho encontrado 
-    plot_map(city_map, [start] + ucs.actions, waypoint_tags=[], map_name="Shortest Path Visualization")
+    # # Visualiza o mapa e o caminho encontrado 
+    # plot_map(city_map, [start] + ucs.actions, waypoint_tags=[], map_name="Shortest Path Visualization")
+    
+    # Para testar o A-Star:
+    astar = AStar()
+    astar.solve(problem)
+    print_path([start] + astar.actions, [], city_map)
+    plot_map(city_map, [start] + astar.actions, waypoint_tags=[], map_name="Shortest Path Visualization")

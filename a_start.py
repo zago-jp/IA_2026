@@ -12,10 +12,6 @@ class AStar(SearchAlgorithm):
         self.num_states_explored: int = 0      # Número de estados explorados
         
     # ------ IMPLEMENTAÇÃO ---------------------------------------------------------
-    
-    # f(n) = g(n) + h(n)
-    def f(n):
-        return n.path_cost + search_problem.h(n.state)
 
     # Implementação A-Star
     def solve(self, search_problem: SearchProblem) -> None:
@@ -24,12 +20,19 @@ class AStar(SearchAlgorithm):
         self.states = []                # Guarda todos os estados do caminho
         self.path_cost = None           # Custo total encontrado
         self.num_states_explored = 0    # Contagem de número de nós expandidos(explorados)
+        
+        # f(n) = g(n) + h(n)
+        def f(n):
+            return n.path_cost + search_problem.h(n.state)
 
         # Fila de Prioridade: usando a f(n)
         frontier = PriorityQueue(key=f)
         
         # Melhor caminho de cada estado
         reached = {}
+        
+        # Cria o nó inicial
+        initial_node = Node(state=search_problem.initial_state)
         
         # Coloca o nó na frnteira
         frontier.push(initial_node)
@@ -49,7 +52,7 @@ class AStar(SearchAlgorithm):
                 # Recupera os estados visitados
                 self.states = node.path_states()
                 # Guarda o custo
-                self.path_cost = node.path_cost()
+                self.path_cost = node.path_cost
                 # Encerra
                 return
             
