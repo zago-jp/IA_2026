@@ -84,6 +84,12 @@ def location_from_tag(tag: str, city_map: CityMap) -> str | None:
     possible_locations = sorted([location for location, tags in city_map.tags.items() if tag in tags])
     return possible_locations[0] if len(possible_locations) > 0 else None
 
+def location_from_tag_id(tag_id:int, city_map: CityMap) -> str | None:
+    with open("data/bg-landmarks.json", "r") as f:
+        waypoints = json.load(f)
+    return waypoints[tag_id -1]
+
+
 # Função para calcular a distância entre duas localizações geográficas usando a fórmula de Haversine
 def compute_distance(geo1: GeoLocation, geo2: GeoLocation) -> float:
     """
