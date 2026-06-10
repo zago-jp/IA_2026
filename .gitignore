@@ -1,2 +1,13 @@
+# Gerado pela IDE
+.idea/
+
+# Gerado pelo Python
 __pycache__/
 *.pyc
+*.pyo
+
+# Gerado pelo pytest
+.pytest_cache/
+
+# macOS
+.DS_Store
