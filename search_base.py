@@ -60,43 +60,43 @@ class Node:
         self.path_cost = path_cost  # Custo g(n): soma dos custos de todas as ações do caminho da raiz até este nó
     
     def path_actions(self) -> list[str]:  # Reconstrói e retorna a lista de ações tomadas da raiz até este nó
-       actions = []   # Lista vazia que vai acumular as ações
-       node = self    # Começa pelo nó atual e vai subindo até a raiz
+        actions = []            # Lista vazia que vai acumular as ações
+        node = self             # Começa pelo nó atual e vai subindo até a raiz
        
-       while node.parent is not None:   # Continua enquanto houver um nó pai (para quando chega à raiz)
-          actions.append(node.action)   # Adiciona a ação que levou a este nó
-          node = node.parent            # Sobe um nível na árvore (vai para o nó pai)
+        while node.parent is not None:   # Continua enquanto houver um nó pai (para quando chega à raiz)
+            actions.append(node.action)   # Adiciona a ação que levou a este nó
+            node = node.parent            # Sobe um nível na árvore (vai para o nó pai)
        
-       actions.reverse()  # Inverte a lista, pois foi construída de trás para frente (do nó até a raiz)
-       return actions      # Retorna a sequência de ações na ordem correta (da raiz até o nó)
+        actions.reverse()       # Inverte a lista, pois foi construída de trás para frente (do nó até a raiz)
+        return actions          # Retorna a sequência de ações na ordem correta (da raiz até o nó)
         
     def path_states(self) -> list[State]:  # Reconstrói e retorna a lista de estados visitados da raiz até este nó
-        node = self   # Começa pelo nó atual
-        states = []   # Lista vazia que vai acumular os estados
+        node = self             # Começa pelo nó atual
+        states = []             # Lista vazia que vai acumular os estados
 
         while node is not None:          # Continua enquanto houver nó (inclui a raiz, que tem parent=None)
             states.append(node.state)    # Adiciona o estado do nó atual à lista
             node = node.parent           # Sobe um nível na árvore
         
-        states.reverse()  # Inverte a lista, pois foi construída de trás para frente
-        return states      # Retorna os estados na ordem correta (do estado inicial até o atual)
+        states.reverse()        # Inverte a lista, pois foi construída de trás para frente
+        return states           # Retorna os estados na ordem correta (do estado inicial até o atual)
    
-    def depth(self) -> int:  # Calcula e retorna a profundidade do nó na árvore (quantos níveis abaixo da raiz)
-        node = self   # Começa pelo nó atual
-        d = 0         # Contador de profundidade, começa em 0
+    def depth(self) -> int:     # Calcula e retorna a profundidade do nó na árvore (quantos níveis abaixo da raiz)
+        node = self             # Começa pelo nó atual
+        d = 0                   # Contador de profundidade, começa em 0
         while node.parent is not None:  # Sobe pela árvore enquanto houver pai
-            d += 1           # Incrementa a profundidade a cada nível subido
+            d += 1              # Incrementa a profundidade a cada nível subido
             node = node.parent  # Move para o nó pai
-        return d  # Retorna a profundidade total
+        return d                # Retorna a profundidade total
 
     def expand(self, problem: SearchProblem):  # Expande o nó gerando todos os nós filhos com base nos sucessores do problema
         for state, action, cost in problem.successors(self.state):  # Itera sobre cada sucessor: (novo estado, ação, custo da ação)
             yield Node(state, self, action, self.path_cost + cost)  # Cria e entrega (yield) um novo nó filho com custo acumulado atualizado
     
-    def __repr__(self):  # Define como o nó é exibido como string
+    def __repr__(self):                 # Define como o nó é exibido como string
         return f"Node({self.state!r})"  # Exibe apenas o estado contido no nó
     
 #-------------Classe base para algoritmos de busca (SearchAlgorithm) ---------------#
 class SearchAlgorithm:    
     def solve(self, search_problem: SearchProblem) -> None:  # Método que deve ser implementado por cada algoritmo concreto (BFS, DFS, A*, etc.)
-        raise NotImplementedError("Override me")  # Método abstrato: lança erro se chamado sem ser sobrescrito por uma subclasse
+        raise NotImplementedError("Override me")             # Método abstrato: lança erro se chamado sem ser sobrescrito por uma subclasse

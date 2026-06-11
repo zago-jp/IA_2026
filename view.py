@@ -11,7 +11,8 @@ class Menu:
     def show_menu(self) -> None:
         print("Selecione uma das seguintes opções:")
 
-        print(f"1 - Adicionar inicio: {"Sem ponto de largada." if self.option == -1 else self.option}")
+        ponto_atual = "Sem ponto de largada." if self.option == -1 else self.option
+        print(f"1 - Adicionar inicio: {ponto_atual}")
         print(f"2 - Adicionar parada:")
         print(f"3 - Remover parada:")
         print("0 - Realizar Rota: ")
@@ -33,10 +34,10 @@ class Menu:
 
     def show_route(self) -> None:
         print("Ver a rota atual")
-        for i in range(len(self.waypoints_travelling)):
-            print(f"{i+1}º - {self.waypoints_travelling[i]}")
+        for i, waypoint in enumerate(self.waypoints_travelling, start=1):
+            print(f"{i}º - {waypoint}")
 
 if __name__ == "__main__":
-    Menu = Menu()
+    menu = Menu()
     Menu.show_menu()
     Menu.show_menu_dot()

@@ -15,7 +15,7 @@ class UniformCostSearch(SearchAlgorithm):
     def g(self, n: Node) -> float:
         return n.path_cost
     
-    # Implementação da UCS com tabela de estados alcançados
+    # Implementação da UCS com tabela de estados alcançados:
     def solve(self, search_problem: SearchProblem) -> None:
         
         # Inicializa e zera execuções anteriores(Caso já tenha sido executado anteriormente)

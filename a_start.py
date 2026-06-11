@@ -32,7 +32,7 @@ class AStar(SearchAlgorithm):
         reached = {}
         
         # Cria o nó inicial
-        initial_node = Node(state=search_problem.initial_state)
+        initial_node = Node(state=search_problem.get_initial_state())
         
         # Coloca o nó na frnteira
         frontier.push(initial_node)
@@ -43,7 +43,13 @@ class AStar(SearchAlgorithm):
         # Loop principal(Enquanto houver estados a explorar)
         while not frontier.is_empty():
             node = frontier.pop()           # Remove o melhor nó(menor f(n))
-            self.num_states_explored += 1   # Conta o número de nós expandidos
+            
+            # Checa se esse ainda é o melhor caminho conhecido para o seue estado,
+            # se não for, foi superado -> descarta e pga o próximo
+            if reached.get(node.state) is not node:
+                continue
+            
+            self.num_states_explored += 1
             
             # Teste de objetivo
             if search_problem.is_goal(node.state):

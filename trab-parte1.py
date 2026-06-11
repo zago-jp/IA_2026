@@ -1,7 +1,6 @@
 from search_base import SearchProblem, SearchAlgorithm, State
 from map_util import CityMap, GeoLocation, create_bg_map, location_from_tag, read_map, print_path, compute_distance
 from visualization import plot_map
-import plotly.graph_objects as go
 from typing import Iterator
 from ucs import UniformCostSearch
 from a_start import AStar
@@ -33,6 +32,9 @@ if __name__ == "__main__":
     end = location_from_tag("landmark=madre-marta", city_map)
     
     problem = ShortestPathProblem(start_location=start, end_location=end, city_map=city_map)
+    
+    # Para testar a UCS descomente o codigo abaixo:
+    
     # ucs = UniformCostSearch()
     # ucs.solve(problem)
 

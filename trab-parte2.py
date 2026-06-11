@@ -5,7 +5,7 @@ from time import sleep
 from map_util import create_bg_map, location_from_tag, location_from_tag_id, print_path, CityMap
 from search_base import SearchProblem, State
 from typing import Iterator
-from view import *
+from view import Menu
 from ucs import UniformCostSearch
 from visualization import plot_map
 
@@ -44,6 +44,7 @@ class WaypointsShortestPathProblem(SearchProblem):
 
 
     pass
+
 # Realize testes e visualiza os resultados
 
 if __name__ == "__main__":
@@ -86,13 +87,17 @@ if __name__ == "__main__":
                 print("Ponto removido com sucesso")
                 continue
             case 0:
-                continue
+                break
             case _:
                 print("Selecione uma opção valida")
 
+    if initial_state is None or len(waypoints) == 0:
+        print("Rota incompleta. Configure um ponto de início e ao menos uma parada.")
+        exit()
+
     menu.waypoints_travelling.insert(0, initial)
     ucs = UniformCostSearch()
-    all_actions = list(ucs.actions)
+    all_actions = []
     full_path = [initial_state] + waypoints
 
 
