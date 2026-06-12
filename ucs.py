@@ -45,6 +45,10 @@ class UniformCostSearch(SearchAlgorithm):
             # Remove o nó de menor custo acumulado
             actual_node = frontier.pop()
             
+            # Otimização
+            if reached.get(actual_node.state) is not actual_node:
+                continue
+            
             # Conta o número de nós explorados
             self.num_states_explored += 1
             
