@@ -28,7 +28,7 @@ class AStar(SearchAlgorithm):
         frontier = PriorityQueue(key=f)
         
         # Melhor caminho encontrado para cada estado
-        reached = {}
+        reached: dict[State, Node] = {}
         
         # Cria o nó inicial
         initial_node = Node(state=search_problem.get_initial_state())
@@ -42,7 +42,7 @@ class AStar(SearchAlgorithm):
         # Loop principal (enquanto houver estados para explorar)
         while not frontier.is_empty():
             
-            # Remove o nó com menor valor de f(n)
+            # Remove o nó com maior prioridade(menor )
             node = frontier.pop()
             
             # Otimização
@@ -54,30 +54,20 @@ class AStar(SearchAlgorithm):
             
             # Teste de objetivo
             if search_problem.is_goal(node.state):
-                
-                # Recupera as ações do caminho solução
                 self.actions = node.path_actions()
-                
-                # Recupera os estados visitados
                 self.states = node.path_states()
-                
-                # Guarda o custo total da solução
                 self.path_cost = node.path_cost
-                
-                # Encerra a busca
                 return
             
             # Expande os filhos do nó atual
             for child in node.expand(search_problem):
                 
-                # Estado do filho
-                s = child.state
+                filho = child.state
                 
                 # Se o estado nunca foi alcançado ou encontramos um caminho melhor
-                if s not in reached or child.path_cost < reached[s].path_cost:
+                if filho not in reached or child.path_cost < reached[filho].path_cost:
                     
                     # Atualiza o melhor caminho para o estado
-                    reached[s] = child
-                    
+                    reached[filho] = child
                     # Adiciona o filho à fronteira para exploração futura
                     frontier.push(child)

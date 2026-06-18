@@ -11,10 +11,6 @@ class UniformCostSearch(SearchAlgorithm):
         self.path_cost: float = None           # Soma dos custos ao longo do caminho
         self.num_states_explored: int = 0      # Número de estados explorados
          
-    # g(n) = custo acumulado do nó até o estado atual
-    def g(self, n: Node) -> float:
-        return n.path_cost
-    
     # Implementação da UCS com tabela de estados alcançados:
     def solve(self, search_problem: SearchProblem) -> None:
         
@@ -25,13 +21,12 @@ class UniformCostSearch(SearchAlgorithm):
         self.num_states_explored = 0    # Contagem do número de nós explorados
         
         # Fila de Prioridade: usando g(n)
-        frontier = PriorityQueue(key=lambda n: self.g(n))
+        frontier = PriorityQueue(key=lambda n: n.path_cost)
         
-        # Cria o nó inicial
         initial_node = Node(state=search_problem.get_initial_state())
         
         # Melhor caminho encontrado para cada estado
-        reached = {}
+        reached: dict[State, Node] = {}
         
         # Coloca o nó inicial na fronteira
         frontier.push(initial_node)
@@ -54,30 +49,20 @@ class UniformCostSearch(SearchAlgorithm):
             
             # Teste de objetivo
             if search_problem.is_goal(actual_node.state):
-                
-                # Recupera as ações do caminho solução
                 self.actions = actual_node.path_actions()
-                
-                # Recupera os estados visitados
                 self.states = actual_node.path_states()
-                
-                # Guarda o custo total da solução
                 self.path_cost = actual_node.path_cost
-                
-                # Encerra a busca
                 return
                 
             # Expande os filhos do nó atual
             for child in actual_node.expand(search_problem):
-                
                 # Estado do filho
-                s = child.state
+                fiho = child.state
                 
                 # Se o estado nunca foi alcançado ou encontramos um caminho melhor
-                if s not in reached or child.path_cost < reached[s].path_cost:
-                    
+                if filho not in reached or child.path_cost < reached[filho].path_cost:
+            
                     # Atualiza o melhor caminho para o estado
-                    reached[s] = child
-                    
+                    reached[filho] = child
                     # Adiciona o filho à fronteira para exploração futura
                     frontier.push(child)

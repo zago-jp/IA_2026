@@ -18,7 +18,6 @@ class WaypointsShortestPathProblem(SearchProblem):
     def __init__(self, start_state:str|None, goal_state:str, waypoints: list[set[str]], city_map:CityMap):
         # Inicializa o problema com estado inicial e estado objetivo
         super().__init__(initial_state=State(start_state), goal_state = State(goal_state))
-        self.waypoints = waypoints      # Lista de pontos de parada da rota
         self.city_map = city_map        # Mapa com distâncias e coordenadas geográficas
 
     # Gera os sucessores do estado atual

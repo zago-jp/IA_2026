@@ -47,18 +47,27 @@ if __name__ == "__main__":
     # Cria o problema de menor caminho
     problem = ShortestPathProblem(start_location=start, end_location=end, city_map=city_map)
     
-    # Executa a busca com UCS
-    ucs = UniformCostSearch()
-    ucs.solve(problem)
+    Algoritmo = 1
     
-    # Exibe e plota o caminho encontrado pela UCS
-    print_path([start] + ucs.actions, [], city_map)
-    plot_map(city_map, [start] + ucs.actions, waypoint_tags=[], map_name="Shortest Path Visualization")
-    
-    # Executa a busca com A*
-    astar = AStar()
-    astar.solve(problem)
-    
-    # Exibe e plota o caminho encontrado pelo A*
-    print_path([start] + astar.actions, [], city_map)
-    plot_map(city_map, [start] + astar.actions, waypoint_tags=[], map_name="Shortest Path Visualization")
+    match Algoritmo:
+        case 1:
+            # Executa a busca com UCS
+            ucs = UniformCostSearch()
+            ucs.solve(problem)
+            
+            # Exibe e plota o caminho encontrado pela UCS
+            print_path([start] + ucs.actions, [], city_map)
+            plot_map(city_map, [start] + ucs.actions, waypoint_tags=[], map_name="Shortest Path Visualization")
+            
+        case 2:
+            # Executa a busca com A*
+            astar = AStar()
+            astar.solve(problem)
+            
+            # Exibe e plota o caminho encontrado pelo A*
+            print_path([start] + astar.actions, [], city_map)
+            plot_map(city_map, [start] + astar.actions, waypoint_tags=[], map_name="Shortest Path Visualization")
+            
+        case _:
+            print("Valor inválido")
+        
